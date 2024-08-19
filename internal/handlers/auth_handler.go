@@ -44,7 +44,7 @@ func exchangeToken(w http.ResponseWriter, r *http.Request) {
 
 	user, err := getUserFromDB(userInfo.Email)
 	if err != nil && err != sql.ErrNoRows {
-		utils.ErrorResponse(w, "Database error", http.StatusBadRequest)
+		utils.ErrorResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -76,7 +76,7 @@ func exchangeToken(w http.ResponseWriter, r *http.Request) {
 		Path:     "/", //
 		HttpOnly: true,
 		Secure:   false, // true for https
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteLaxMode,
 	})
 
 	utils.JSONResponse(w, map[string]string{

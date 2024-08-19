@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/bsrisompong/google-oauth-go-server/internal/config"
+	"github.com/bsrisompong/google-oauth-go-server/internal/google"
 	"github.com/bsrisompong/google-oauth-go-server/internal/handlers"
 	"github.com/bsrisompong/google-oauth-go-server/pkg/db"
 
@@ -13,9 +14,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func init() {
 	config.LoadConfig()
+	google.InitGoogleOAuth()
+}
 
+func main() {
 	databaseURL := os.Getenv("DATABASE_URL")
 	if databaseURL == "" {
 		log.Fatal("DATABASE_URL is not set")
@@ -28,6 +32,7 @@ func main() {
 
 	api := r.PathPrefix("/api/v1").Subrouter()
 
+	handlers.RegisterHealthRoutes(api)
 	handlers.RegisterAuthRoutes(api)
 	handlers.RegisterUserRoutes(api)
 

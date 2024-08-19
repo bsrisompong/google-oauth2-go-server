@@ -19,7 +19,7 @@ func InitGoogleOAuth() {
 		ClientID:     config.GoogleClientId,
 		ClientSecret: config.GoogleClientSecret,
 		RedirectURL:  config.GoogleRedirectURL,
-		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
+		// Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		// Endpoint:     oauth2.Endpoint{TokenURL: "https://accounts.google.com/o/oauth2/token"},
 		Endpoint: google.Endpoint,
 	}
