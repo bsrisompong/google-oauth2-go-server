@@ -30,11 +30,13 @@ This project is a Go server that implements Google OAuth 2.0 authentication, wit
 
    Create a `.env` file in the project root with the following contents:
 
+   ```sh
    CLIENT_ID=your-google-client-id
    CLIENT_SECRET=your-google-client-secret
    REDIRECT_URL=http://localhost:8080/auth/google/callback
    JWT_SECRET_KEY=your-secret-key
    DATABASE_URL=postgres://postgres:postgres@postgres:5432/database?sslmode=disable
+   ```
 
 3. **Run the application:**
 
