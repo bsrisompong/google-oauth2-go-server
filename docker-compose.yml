@@ -19,7 +19,7 @@ services:
     ports:
       - "8080:8080" # Expose port 8080 for the Go server
     environment:
-      DATABASE_URL: postgres://myuser:mypassword@postgres:5432/mydatabase?sslmode=disable
+      DATABASE_URL: postgres://user:password@postgres:5432/database?sslmode=disable
     depends_on:
       - postgres
 
