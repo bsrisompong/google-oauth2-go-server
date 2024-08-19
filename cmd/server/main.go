@@ -6,28 +6,36 @@ import (
 	"os"
 
 	"github.com/bsrisompong/google-oauth-go-server/internal/config"
+	"github.com/bsrisompong/google-oauth-go-server/internal/handlers"
 	"github.com/bsrisompong/google-oauth-go-server/pkg/db"
-	"github.com/gorilla/handlers"
+
+	gorillaHandlers "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
 func main() {
 	config.LoadConfig()
 
-	connStr := os.Getenv("DATABASE_URL")
-	db.InitDB(connStr)
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		log.Fatal("DATABASE_URL is not set")
+	}
+	db.InitDB(databaseURL)
 
 	defer db.DB.Close()
 
 	r := mux.NewRouter()
 
-	// api := r.PathPrefix("/api/v1").Subrouter()
+	api := r.PathPrefix("/api/v1").Subrouter()
 
-	corsOptions := handlers.AllowedOrigins([]string{"http://localhost:3000"})
-	corsMethods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
-	corsHeaders := handlers.AllowedHeaders([]string{"Content-Type", "Authorization"})
-	corsCredentials := handlers.AllowCredentials()
+	handlers.RegisterAuthRoutes(api)
+	handlers.RegisterUserRoutes(api)
+
+	corsOptions := gorillaHandlers.AllowedOrigins([]string{"http://localhost:3000"})
+	corsMethods := gorillaHandlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"})
+	corsHeaders := gorillaHandlers.AllowedHeaders([]string{"Content-Type", "Authorization"})
+	corsCredentials := gorillaHandlers.AllowCredentials()
 
 	log.Println("Server is running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", handlers.CORS(corsOptions, corsMethods, corsHeaders, corsCredentials)(r)))
+	log.Fatal(http.ListenAndServe(":8080", gorillaHandlers.CORS(corsOptions, corsMethods, corsHeaders, corsCredentials)(r)))
 }

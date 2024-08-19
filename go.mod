@@ -1,6 +1,6 @@
 module github.com/bsrisompong/google-oauth-go-server
 
-go 1.22.4
+go 1.23
 
 require (
 	cloud.google.com/go/compute/metadata v0.3.0 // indirect
