@@ -3,12 +3,21 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
+	"github.com/bsrisompong/google-oauth-go-server/internal/config"
+	"github.com/bsrisompong/google-oauth-go-server/pkg/db"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
 func main() {
+	config.LoadConfig()
+
+	connStr := os.Getenv("DATABASE_URL")
+	db.InitDB(connStr)
+
+	defer db.DB.Close()
 
 	r := mux.NewRouter()
 
