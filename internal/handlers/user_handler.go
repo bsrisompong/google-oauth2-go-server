@@ -60,7 +60,13 @@ func userInfo(w http.ResponseWriter, r *http.Request) {
 		utils.ErrorResponse(w, "User not found", http.StatusUnauthorized)
 		return
 	}
-	utils.JSONResponse(w, user, http.StatusOK)
+	utils.JSONResponse(w, map[string]interface{}{
+		"id":             user.ID,
+		"email":          user.Email,
+		"name":           user.Name,
+		"picture":        user.Picture,
+		"verified_email": user.VerifiedEmail,
+	}, http.StatusOK)
 
 }
 
