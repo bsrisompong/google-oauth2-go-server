@@ -11,40 +11,6 @@ This project is a Go server that implements Google OAuth 2.0 authentication, wit
 - Protected routes using middleware
 - Error handling with custom utilities
 
-## Project Structure
-
-.
-├── cmd
-│ └── server
-│ └── main.go
-├── db
-│ └── migrations
-│ ├── 000001_create_users_table.down.sql
-│ └── 000001_create_users_table.up.sql
-├── docker-compose.yml
-├── Dockerfile
-├── go.mod
-├── go.sum
-├── internal
-│ ├── auth
-│ │ ├── auth.go
-│ │ └── middleware.go
-│ ├── config
-│ │ └── config.go
-│ ├── google
-│ │ └── google.go
-│ ├── handlers
-│ │ ├── auth_handler.go
-│ │ ├── health_handler.go
-│ │ └── user_handler.go
-│ └── models
-│ └── user.go
-└── pkg
-├── db
-│ └── db.go
-└── utils
-└── utils.go
-
 ## Requirements
 
 - Go 1.17 or higher
@@ -64,11 +30,13 @@ This project is a Go server that implements Google OAuth 2.0 authentication, wit
 
    Create a `.env` file in the project root with the following contents:
 
+   ```sh
    CLIENT_ID=your-google-client-id
    CLIENT_SECRET=your-google-client-secret
    REDIRECT_URL=http://localhost:8080/auth/google/callback
    JWT_SECRET_KEY=your-secret-key
    DATABASE_URL=postgres://postgres:postgres@postgres:5432/database?sslmode=disable
+   ```
 
 3. **Run the application:**
 
